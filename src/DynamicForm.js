@@ -41,11 +41,13 @@ const DynamicForm = () => {
           type: "string",
         },
         Favcolor: {
-          value: ["Orange", "Red", "Pink", "Green"],
+          list: ["Orange", "Red", "Pink", "Green"],
+          value: "Pink",
           type: "dropdown",
         },
         Favcity: {
-          value: ["Chennai", "Goa", "Mumbai", "Delhi"],
+          list: ["Chennai", "Goa", "Mumbai", "Delhi"],
+          value: "Mumbai",
           type: "dropdown",
         },
         Vote_Eligible: {
@@ -71,11 +73,13 @@ const DynamicForm = () => {
           type: "string",
         },
         Favcolor: {
-          value: ["Orange", "Red", "Pink", "Green"],
+          list: ["Orange", "Red", "Pink", "Green"],
+          value: "Red",
           type: "dropdown",
         },
         Favcity: {
-          value: ["Chennai", "Goa", "Mumbai", "Delhi"],
+          list: ["Chennai", "Goa", "Mumbai", "Delhi"],
+          value: "Goa",
           type: "dropdown",
         },
         Vote_Eligible: {
@@ -342,6 +346,7 @@ const DynamicForm = () => {
                           native: true,
                         },
                       }}
+                      value={obj[val][value].value}
                       onChange={(e) => {
                         setObj1({
                           ...obj1,
@@ -350,7 +355,7 @@ const DynamicForm = () => {
                         checkChange(obj[val][value].value, e.target.value);
                       }}
                     >
-                      {obj[val][value]?.value.map((value, ind) => (
+                      {obj[val][value].list?.map((value, ind) => (
                         <option key={ind} value={value}>
                           {value}
                         </option>
@@ -370,12 +375,19 @@ const DynamicForm = () => {
                               ...obj1,
                               [val]: {
                                 ...obj1[val],
-                                [value]: dayjs(eValue).format("DD/MM/YYYY"),
+                                [value]:
+                                  dayjs(eValue).format("DD/MM/YYYY") ===
+                                  "Invalid Date"
+                                    ? ""
+                                    : dayjs(eValue).format("DD/MM/YYYY"),
                               },
                             });
                             checkChange(
                               obj[val][value].value,
-                              dayjs(eValue).format("DD/MM/YYYY")
+                              dayjs(eValue).format("DD/MM/YYYY") ===
+                                "Invalid Date"
+                                ? ""
+                                : dayjs(eValue).format("DD/MM/YYYY")
                             );
                           }}
                           format="DD/MM/YYYY"
